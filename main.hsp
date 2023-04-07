@@ -1,10 +1,47 @@
 #include "hsp3dish.as"
+#include "hspinet.as"
+
+#define INGREDIENT_FILENAME "ingredient.json"
+
+notesel ingredient
+exist INGREDIENT_FILENAME
+logmes strsize
+if strsize != -1 : noteload INGREDIENT_FILENAME : else : noteadd "blank"
+
+jsonopen ingredients_ptr, ingredient
+jsongetobj ingredients_ptr, "ingredients", ingredients_ptr
+
+dim ingredient_ptr, 10
+dim ingredient_id, 10
+dim ingredient_unit, 10
+dim ingredient_name, 10
+dim ingredient_set_ptr, 10
+dim ingredient_set_number, 10, 10
+jsonnext ingredient_ptr(0), ingredients_ptr, 2
+jsongeti ingredient_id(0), "id", ingredient_ptr(0)
+jsongets ingredient_unit(0), "unit", ingredient_ptr(0)
+jsongets ingredient_name(0), "name", ingredient_ptr(0)
+jsongetobj ingredient_set_ptr(0), "set", ingredient_ptr(0)
+jsonnext ingredient_set_ptr(0), ingredient_set_ptr(0), 2
+counter = 0
+while(ingredient_set_ptr(0)!=NULL)
+	jsongeti ingredient_set_number(0, counter), "number", ingredient_set_ptr(0)
+	counter++
+	jsonnext ingredient_set_ptr(0), ingredient_set_ptr(0), 0
+wend
 
 repeat
 	redraw 0
 
 	pos  0, 0
 	print "hi"
+	print ingredient
+	print ingredients_ptr
+	print ingredient_ptr(0)
+	print ingredient_id(0)
+	print ingredient_unit(0)
+	print ingredient_name(0)
+	print ingredient_set_number(0, 0)
 	redraw 1
 	await 10
 loop

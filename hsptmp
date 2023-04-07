@@ -1,0 +1,17 @@
+#include "hsp3dish.as"
+
+notesel ingredient
+exist "ingredient.csv"
+logmes strsize
+if strsize != -1 : noteload "ingredient.csv"
+
+
+repeat
+	redraw 0
+
+	pos  0, 0
+	print "hi"
+	print ingredient
+	redraw 1
+	await 10
+loop
